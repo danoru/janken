@@ -4,10 +4,26 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="style.css">
+        <link rel="stylesheet" href="styles.css">
+        <link rel="icon" type="image/png" href="favicon.ico">
         <title>Janken</title>
     </head>
+    <header>
+        <h1 class="title">Janken</h1>
+        <h3 class="subtitle">じゃんけん</h3>
+    </header>
     <body>
         <script type="text/javascript" src="script.js"></script>
+        <div>
+            <h3>Select your throw.</h3>
+            <p>First to five points wins!</p>
+        </div>
+        <div id="selectors">
+            <input type="button" value="Rock" />
+            <input type="button" value="Paper" />
+            <input type="button" value="Scissors" />
+        </div>
+        <div id="result"></div>
+        <button onClick={resetGame()} id="reset">Reset</button>
     </body>
 </html>

@@ -1,23 +1,24 @@
-const playChoice = ["Rock", "Paper","Scissors"]
-let computerSelection;
-let playerSelection;
-
 // Start the score off at 0.
 
 let playerScore = 0;
 let computerScore = 0;
 
 
+// Determine which hand will be thrown by the player and CPU.
+
 function playerPlay() {
-  playerSelection = prompt("What hand will you play?")
+  const playerSelection = document.querySelectorAll("input");
   return playerSelection;
   
 };
 
 function computerPlay() {
+  const playChoice = ["Rock", "Paper","Scissors"]
   computerSelection = playChoice[Math.floor(Math.random() * playChoice.length)];
   return computerSelection;
 };
+
+// Functions for actual game play and score-keeping.
 
 function playRound() {
   computerPlay();
@@ -62,3 +63,11 @@ function game() {
     console.log("You lose!");
   }
 };
+
+// Reset the game to play another match against the CPU.
+
+function resetGame() {
+  round = 1;
+  playerScore = 0;
+  computerScore = 0;
+}
