@@ -2,72 +2,95 @@
 
 let playerScore = 0;
 let computerScore = 0;
+let round = 0;
 
+// Determine which hand will be thrown by the Player when clicking on an input.
 
-// Determine which hand will be thrown by the player and CPU.
+const buttons = document.querySelectorAll("input")
 
-function playerPlay() {
-  const playerSelection = document.querySelectorAll("input");
-  return playerSelection;
-  
-};
+// Determine which hand will be thrown by the CPU.
 
 function computerPlay() {
   const playChoice = ["Rock", "Paper","Scissors"]
-  computerSelection = playChoice[Math.floor(Math.random() * playChoice.length)];
-  return computerSelection;
+  return playChoice[Math.floor(Math.random() * playChoice.length)]
 };
 
-// Functions for actual game play and score-keeping.
+// Functions that turn buttons on and off.
 
-function playRound() {
-  computerPlay();
-  playerPlay();
-  
-  if (playerSelection == computerSelection) {
-      alert("It's a draw!");
-  } else if (playerSelection == "Rock" && computerSelection == "Paper") {
-      alert("Computer wins!");
-      computerScore+=1;
-  } else if (playerSelection == "Rock" && computerSelection == "Scissors") {
-      alert("Player wins!");
-      playerScore+=1;
-  } else if (playerSelection == "Paper" && computerSelection == "Scissors") {
-      alert("Computer wins!");
-      computerScore+=1;
-  } else if (playerSelection == "Paper" && computerSelection == "Rock") {
-      alert("Player wins!");
-      playerScore+=1;  
-  } else if (playerSelection == "Scissors" && computerSelection == "Rock") {
-      alert("Computer wins!");
-      computerScore+=1;
-  } else if (playerSelection == "Scissors" && computerSelection == "Paper") {
-      alert("Player wins!");
-      playerScore+=1;
-  };
+function enableButtons() {
+  buttons.forEach(elem => {
+    elem.disabled = false
+  })
 };
 
-function game() {
-  for (let round = 1; round < 6; round++) {
-    playRound();
-    console.log("You chose " + playerSelection + ". Player Score: " + playerScore)
-    console.log("You chose " + computerSelection + ". Computer Score: " + computerScore)
-    console.log(round);
+function disableButtons() {
+  buttons.forEach(elem => {
+    elem.disabled = true
+  })
+};
+
+// Function for actual game play and score-keeping.
+
+function playRound(playerSelection) {
+  let computerSelection = computerPlay()
+  let roundResult = ""
+
+  if (round == 0) {
+    alert("Saishowaguu!")
+    alert("Jan ...")
+    alert("Ken ...")
+    alert("Pon!")
   }
 
-  if (playerScore === computerScore) {
-    console.log("It's a draw!");
-  } else if (playerScore > computerScore) {
-    console.log("You win!");
-  } else if (computerScore < playerScore) {
-    console.log("You lose!");
+  if ((playerSelection == "Rock" && computerSelection == "Scissors") || 
+      (playerSelection == "Scissors" && computerSelection == "Paper") || 
+      (playerSelection == "Paper" && computerSelection == "Rock")) {
+        round += 1
+        playerScore += 1
+        roundResult = ("Round " + round + ": Player wins! " + playerSelection + " beats " + computerSelection
+            + "<br><br>Player score: " + playerScore + "<br>Computer score: " + computerScore)
+
+    if (playerScore == 5) {
+      roundResult += "<br><br>Player wins the game!"
+      disableButtons()
+      }
+    } else if (playerSelection == computerSelection) {
+        round += 1
+        roundResult = ("Round " + round + ": It\'s a tie. Both Player and Computer chose " + playerSelection +"."
+            + "<br><br>Player score: " + playerScore + "<br>Computer score: " + computerScore)
+    } else {
+        round += 1
+        computerScore += 1
+        roundResult = ("Round " + round + ": Computer wins! " + computerSelection + " beats " + playerSelection
+            + "<br><br>Player score: " + playerScore + "<br>Computer score: " + computerScore)
+
+    if (computerScore == 5) {
+        roundResult += "<br><br>Computer wins the game!"
+        disableButtons()
+    }
   }
+  document.getElementById("results").style.display = "block"
+  document.getElementById("results").innerHTML = roundResult
+    return
 };
+
+buttons.forEach(button =>{
+  button.addEventListener("click", function(){
+      playRound(button.value)
+  })
+});
 
 // Reset the game to play another match against the CPU.
 
 function resetGame() {
-  round = 1;
-  playerScore = 0;
-  computerScore = 0;
-}
+  round = 0
+  playerScore = 0
+  computerScore = 0
+  roundResult = ""
+
+  enableButtons()
+
+  document.getElementById("results").style.display = "none"
+  document.getElementById("results").innerHTML = roundResult
+    return
+};
